@@ -9,9 +9,8 @@ RUN npm install -g pnpm
 # Copy workspace/package files
 COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml ./
 
-# Copy app and packages sources needed for workspace install
+# Copy app sources needed for workspace install
 COPY apps ./apps
-COPY packages ./packages
 
 # Install backend workspace dependencies
 RUN pnpm install --filter @foodsync/backend... --frozen-lockfile || pnpm install --filter @foodsync/backend...
