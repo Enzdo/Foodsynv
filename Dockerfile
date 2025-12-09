@@ -16,7 +16,7 @@ RUN pnpm install --frozen-lockfile || pnpm install
 COPY . .
 
 # Build the backend
-RUN cd apps/backend && node ace build
+RUN cd apps/backend && npx tsx bin/console.ts build
 
 # Production stage
 FROM node:20-alpine AS production
