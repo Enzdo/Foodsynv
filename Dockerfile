@@ -29,10 +29,11 @@ WORKDIR /app
 # Install pnpm
 RUN npm install -g pnpm
 
-# Copy built application
-COPY --from=builder /app/apps/backend/build ./
+# Copy backend application (including build output and package files)
+COPY --from=builder /app/apps/backend ./apps/backend
 
-# Install production dependencies only
+# Install production dependencies only inside backend package
+WORKDIR /app/apps/backend
 RUN pnpm install --prod --frozen-lockfile || pnpm install --prod
 
 # Expose port
@@ -43,5 +44,5 @@ ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3333
 
-# Start the application
-CMD ["node", "bin/server.js"]
+# Start the application from compiled JS
+CMD ["node", "build/bin/server.js"]
