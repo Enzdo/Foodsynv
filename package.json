@@ -1,0 +1,30 @@
+{
+  "name": "foodsync",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FoodSync - Application iPhone de gestion intelligente du frigo familial",
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:backend": "turbo run dev --filter=@foodsync/backend",
+    "dev:frontend": "turbo run dev --filter=@foodsync/frontend",
+    "build": "turbo run build",
+    "build:backend": "turbo run build --filter=@foodsync/backend",
+    "build:frontend": "turbo run build --filter=@foodsync/frontend",
+    "lint": "turbo run lint",
+    "db:migrate": "pnpm --filter @foodsync/backend run migration:run",
+    "db:rollback": "pnpm --filter @foodsync/backend run migration:rollback",
+    "db:fresh": "pnpm --filter @foodsync/backend run migration:fresh",
+    "ios:build": "pnpm --filter @foodsync/frontend run ios:build",
+    "ios:open": "pnpm --filter @foodsync/frontend run ios:open",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0"
+  },
+  "packageManager": "pnpm@9.14.2",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

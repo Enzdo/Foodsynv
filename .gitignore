@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+.output/
+build/
+.nuxt/
+.nitro/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Turbo
+.turbo/
+
+# iOS/Capacitor
+apps/frontend/ios/
+apps/frontend/android/
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# Database
+*.sqlite
+*.sqlite3
