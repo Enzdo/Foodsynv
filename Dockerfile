@@ -36,6 +36,9 @@ COPY --from=builder /app/apps/backend ./apps/backend
 WORKDIR /app/apps/backend
 RUN pnpm install --prod --frozen-lockfile || pnpm install --prod
 
+# Ensure compiled entrypoints and start files are available at expected paths
+RUN cp -r build/start ./start && cp -r build/bin ./bin
+
 # Expose port
 EXPOSE 3333
 
