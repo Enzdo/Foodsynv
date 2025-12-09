@@ -1,5 +1,4 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import type { NextFn } from '@adonisjs/core/types'
 import type { Authenticators } from '@adonisjs/auth/types'
 
 /**
@@ -14,7 +13,7 @@ export default class AuthMiddleware {
 
   async handle(
     ctx: HttpContext,
-    next: NextFn,
+    next: () => Promise<void>,
     options: {
       guards?: (keyof Authenticators)[]
     } = {}
