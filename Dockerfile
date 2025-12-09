@@ -18,8 +18,8 @@ RUN pnpm install --filter @foodsync/backend... --frozen-lockfile || pnpm install
 # Copy remaining source code (if any)
 COPY . .
 
-# Build the backend using workspace script
-RUN pnpm --filter @foodsync/backend build
+# Build the backend by compiling TypeScript directly
+RUN cd apps/backend && pnpm exec tsc -p tsconfig.json
 
 # Production stage
 FROM node:20-alpine AS production
