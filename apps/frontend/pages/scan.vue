@@ -130,7 +130,6 @@
 </template>
 
 <script setup lang="ts">
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { useReceiptStore } from '~/stores/receipt'
 import { useFridgeStore } from '~/stores/fridge'
 
@@ -140,18 +139,29 @@ const router = useRouter()
 
 async function takePhoto() {
   try {
+    // Dynamic import to avoid SSR/build issues
+    const { Camera, CameraResultType, CameraSource } = await import('@capacitor/camera')
+    
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Base64,
-      source: CameraSource.Camera, // Force camera
+      source: CameraSource.Camera,
     })
 
     if (image.base64String) {
       await receiptStore.scanReceipt(image.base64String)
     }
-  } catch (error) {
-    console.error('Camera error:', error)
+  } catch (error: any) {
+    // Fallback for web: use file input instead
+    if (error.message?.includes('not implemented') || error.message?.includes('not available')) {
+      // Trigger file input as fallback
+      const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement
+      if (fileInput) fileInput.click()
+    } else {
+      console.error('Camera error:', error)
+      alert('Erreur caméra. Utilisez l\'option "Importer photo" à la place.')
+    }
   }
 }
 
