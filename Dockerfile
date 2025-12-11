@@ -18,8 +18,8 @@ RUN pnpm install --filter @foodsync/backend... --frozen-lockfile || pnpm install
 # Copy remaining source code (if any)
 COPY . .
 
-# Build the backend by compiling TypeScript directly
-RUN cd apps/backend && pnpm exec tsc -p tsconfig.json
+# Install backend dependencies and build
+RUN cd apps/backend && pnpm install && npx tsx bin/console.ts build
 
 # Production stage
 FROM node:20-alpine AS production
@@ -35,9 +35,6 @@ COPY --from=builder /app/apps/backend ./apps/backend
 # Install production dependencies only inside backend package
 WORKDIR /app/apps/backend
 RUN pnpm install --prod --frozen-lockfile || pnpm install --prod
-
-# Ensure compiled entrypoints and start files are available at expected paths
-RUN cp -r build/start ./start && cp -r build/bin ./bin
 
 # Expose port
 EXPOSE 3333
