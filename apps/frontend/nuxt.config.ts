@@ -93,6 +93,6 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'static',
+    // preset: 'static',
   },
 })
