@@ -82,6 +82,9 @@ router.group(() => {
     router.put('/recipes/family/:id', '#controllers/recipes_controller.updateFamilyRecipe')
     router.delete('/recipes/family/:id', '#controllers/recipes_controller.deleteFamilyRecipe')
     router.get('/recipes/:id', '#controllers/recipes_controller.show')
+
+    // Receipt scanning
+    router.post('/receipts/scan', '#controllers/receipt_controller.scan')
   }).use(middleware.auth())
   
 }).prefix('/api/v1')
