@@ -11,7 +11,7 @@ const loggerConfig = defineConfig({
       transport: {
         targets: targets()
           .pushIf(
-            true,
+            env.get('NODE_ENV') === 'development',
             targets.pretty({
               colorize: true,
             })
