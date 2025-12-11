@@ -1,141 +1,159 @@
 <template>
-  <div class="px-4 pt-4 pb-24">
+  <div class="px-5 pt-8 pb-32">
     <!-- Header -->
-    <header class="flex items-center justify-between mb-6">
+    <header class="flex items-center justify-between mb-8">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900">{{ greeting }}</h1>
-        <p class="text-gray-500">{{ familyStore.currentFamily?.name || 'Bienvenue sur FoodSync' }}</p>
+        <h1 class="text-3xl font-bold text-dark-900 tracking-tight">
+          {{ greeting }}
+        </h1>
+        <p class="text-gray-500 font-medium mt-1 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-primary-500"></span>
+          {{ familyStore.currentFamily?.name || 'Bienvenue sur FoodSync' }}
+        </p>
       </div>
-      <NuxtLink to="/family" class="relative p-2 bg-gray-100 rounded-xl">
-        👨‍👩‍👧‍👦
+      <NuxtLink to="/profile" class="relative p-0.5 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 shadow-glow group">
+        <div class="p-2.5 bg-white rounded-full group-active:scale-95 transition-transform">
+           <span class="text-xl">👤</span>
+        </div>
       </NuxtLink>
     </header>
 
     <!-- No Family Warning -->
-    <div v-if="!familyStore.hasFamily" class="card mb-4 bg-primary-50 border-primary-200">
-      <div class="flex items-center gap-3">
-        <span class="text-3xl">👨‍👩‍👧‍👦</span>
+    <div v-if="!familyStore.hasFamily" class="card mb-8 bg-primary-50/50 border-primary-100">
+      <div class="flex items-center gap-4">
+        <span class="text-4xl">👨‍👩‍👧‍👦</span>
         <div class="flex-1">
-          <p class="font-medium text-primary-900">Commencez par créer une famille</p>
-          <p class="text-sm text-primary-700">Ou rejoignez-en une existante</p>
+          <p class="font-bold text-dark-900 text-lg">Rejoignez une famille</p>
+          <p class="text-sm text-gray-600 mt-1">Configurez votre espace familial pour commencer.</p>
         </div>
       </div>
-      <NuxtLink to="/family" class="mt-3 w-full btn-primary block text-center">
+      <NuxtLink to="/family" class="mt-4 w-full btn-primary block text-center shadow-none">
         Configurer ma famille
       </NuxtLink>
     </div>
 
-    <!-- Quick Stats -->
-    <div v-if="familyStore.hasFamily" class="grid grid-cols-2 gap-3 mb-6">
-      <NuxtLink to="/fridge" class="card">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center">
-            <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-            </svg>
+    <!-- Quick Stats Grid -->
+    <div v-if="familyStore.hasFamily" class="grid grid-cols-2 gap-4 mb-8">
+      <NuxtLink to="/fridge" class="card card-hover group !p-4 relative overflow-hidden">
+        <div class="absolute -right-4 -top-4 w-24 h-24 bg-primary-50 rounded-full blur-2xl group-hover:bg-primary-100 transition-colors"></div>
+        <div class="relative">
+          <div class="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+            <span class="text-2xl">🥬</span>
           </div>
           <div>
-            <p class="text-2xl font-bold text-gray-900">{{ fridgeStore.itemCount }}</p>
-            <p class="text-xs text-gray-500">Articles</p>
+            <p class="text-3xl font-bold text-dark-900">{{ fridgeStore.itemCount }}</p>
+            <p class="text-sm font-medium text-gray-500">Articles au frais</p>
           </div>
         </div>
       </NuxtLink>
       
-      <NuxtLink to="/expiring" class="card">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
-            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+      <NuxtLink to="/expiring" class="card card-hover group !p-4 relative overflow-hidden">
+        <div class="absolute -right-4 -top-4 w-24 h-24 bg-secondary-50 rounded-full blur-2xl group-hover:bg-secondary-100 transition-colors"></div>
+        <div class="relative">
+          <div class="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+            <span class="text-2xl">⚠️</span>
           </div>
           <div>
-            <p class="text-2xl font-bold text-gray-900">{{ fridgeStore.expiringCount }}</p>
-            <p class="text-xs text-gray-500">Expirent bientôt</p>
+            <p class="text-3xl font-bold text-dark-900">{{ fridgeStore.expiringCount }}</p>
+            <p class="text-sm font-medium text-gray-500">Attention requise</p>
           </div>
         </div>
       </NuxtLink>
     </div>
 
     <!-- Expiring Soon Section -->
-    <section v-if="familyStore.hasFamily && fridgeStore.expiringItems.length > 0" class="mb-6">
-      <div class="flex items-center justify-between mb-3">
-        <h2 class="text-lg font-semibold text-gray-900">⚠️ Expire bientôt</h2>
-        <NuxtLink to="/expiring" class="text-primary-600 text-sm font-medium">Voir tout</NuxtLink>
+    <section v-if="familyStore.hasFamily && fridgeStore.expiringItems.length > 0" class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold text-dark-900 flex items-center gap-2">
+          <span>⏰</span> Expire bientôt
+        </h2>
+        <NuxtLink to="/expiring" class="text-primary-600 text-sm font-bold hover:text-primary-700 transition-colors">Voir tout</NuxtLink>
       </div>
       
       <div class="space-y-3">
         <div 
           v-for="item in fridgeStore.expiringItems.slice(0, 3)" 
           :key="item.id"
-          class="card flex items-center gap-4"
+          class="card flex items-center gap-4 !p-3 hover:bg-gray-50 transition-colors"
         >
-          <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-2xl">
+          <div class="w-14 h-14 bg-surface-50 rounded-2xl flex items-center justify-center text-3xl shadow-inner">
             {{ item.emoji }}
           </div>
-          <div class="flex-1">
-            <h3 class="font-medium text-gray-900">{{ item.name }}</h3>
-            <p class="text-sm" :class="getExpirationClass(item.daysUntilExpiration)">
+          <div class="flex-1 min-w-0">
+            <h3 class="font-bold text-dark-900 truncate">{{ item.name }}</h3>
+            <p class="text-sm font-medium mt-0.5 flex items-center gap-1.5" :class="getExpirationClass(item.daysUntilExpiration)">
+              <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
               {{ getExpirationText(item.daysUntilExpiration) }}
             </p>
           </div>
           <span 
             v-if="item.daysUntilExpiration !== null && item.daysUntilExpiration <= 2"
-            class="px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-full"
+            class="px-2.5 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-lg"
           >
-            Urgent
+            J-{{ item.daysUntilExpiration === 0 ? '0' : item.daysUntilExpiration }}
           </span>
         </div>
       </div>
     </section>
 
     <!-- Recipe Suggestions -->
-    <section v-if="familyStore.hasFamily">
-      <div class="flex items-center justify-between mb-3">
-        <h2 class="text-lg font-semibold text-gray-900">🍳 Recettes suggérées</h2>
-        <NuxtLink to="/recipes" class="text-primary-600 text-sm font-medium">Voir tout</NuxtLink>
+    <section v-if="familyStore.hasFamily" class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold text-dark-900 flex items-center gap-2">
+          <span>🍳</span> Idées recettes
+        </h2>
+        <NuxtLink to="/recipes" class="text-primary-600 text-sm font-bold hover:text-primary-700 transition-colors">Voir tout</NuxtLink>
       </div>
       
-      <div v-if="recipesStore.suggestions.length > 0" class="space-y-3">
+      <div v-if="recipesStore.suggestions.length > 0" class="space-y-4">
         <NuxtLink 
           v-for="recipe in recipesStore.suggestions.slice(0, 2)" 
           :key="recipe.id"
           to="/recipes"
-          class="card flex items-center gap-4"
+          class="card group !p-0 overflow-hidden"
         >
-          <div class="w-14 h-14 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center text-2xl">
-            {{ recipe.emoji }}
-          </div>
-          <div class="flex-1">
-            <h3 class="font-medium text-gray-900">{{ recipe.name }}</h3>
-            <p class="text-sm text-gray-500">{{ recipe.matchCount }} ingrédient(s) disponible(s)</p>
-            <div class="flex items-center gap-2 mt-1">
-              <span class="text-xs text-gray-400">⏱ {{ recipe.time }} min</span>
-              <span class="text-xs text-gray-400">•</span>
-              <span class="text-xs text-primary-600 font-medium">{{ recipe.matchPercentage }}% match</span>
+          <div class="flex items-stretch">
+            <div class="w-24 bg-surface-100 flex items-center justify-center text-4xl group-hover:scale-105 transition-transform duration-300">
+              {{ recipe.emoji }}
+            </div>
+            <div class="flex-1 p-4">
+              <h3 class="font-bold text-dark-900 mb-1 group-hover:text-primary-600 transition-colors">{{ recipe.name }}</h3>
+              <p class="text-sm text-gray-500 mb-2">{{ recipe.matchCount }} ingrédient(s) dispo.</p>
+              
+              <div class="flex items-center gap-3">
+                <span class="px-2 py-1 rounded-lg bg-surface-100 text-xs font-medium text-gray-600">
+                  ⏱ {{ recipe.time }} min
+                </span>
+                <span class="text-xs font-bold text-primary-600 bg-primary-50 px-2 py-1 rounded-lg">
+                  {{ recipe.matchPercentage }}% match
+                </span>
+              </div>
             </div>
           </div>
         </NuxtLink>
       </div>
       
-      <div v-else class="card text-center py-6">
-        <p class="text-gray-500 text-sm">Ajoutez des articles au frigo pour obtenir des suggestions</p>
-        <NuxtLink to="/fridge" class="text-primary-600 text-sm font-medium mt-2 inline-block">
+      <div v-else class="card text-center py-8 bg-surface-50 border-dashed border-2 border-gray-200 shadow-none">
+        <p class="text-gray-500 text-sm font-medium">Remplissez votre frigo pour voir des idées !</p>
+        <NuxtLink to="/fridge" class="text-primary-600 text-sm font-bold mt-2 inline-block hover:underline">
           Gérer mon frigo →
         </NuxtLink>
       </div>
     </section>
 
     <!-- Quick Actions -->
-    <section v-if="familyStore.hasFamily" class="mt-6">
-      <h2 class="text-lg font-semibold text-gray-900 mb-3">Actions rapides</h2>
-      <div class="grid grid-cols-2 gap-3">
-        <NuxtLink to="/fridge" class="card text-center py-4">
-          <span class="text-2xl">🍽️</span>
-          <p class="text-sm font-medium text-gray-900 mt-2">Ajouter au frigo</p>
+    <section v-if="familyStore.hasFamily">
+      <h2 class="text-lg font-bold text-dark-900 mb-4 flex items-center gap-2">
+        <span>⚡️</span> Actions rapides
+      </h2>
+      <div class="grid grid-cols-2 gap-4">
+        <NuxtLink to="/fridge" class="btn bg-white border border-gray-100 shadow-sm hover:border-primary-200 text-dark-900 flex-col py-6 h-auto gap-3 group">
+          <span class="text-3xl group-hover:scale-110 transition-transform">🍽️</span>
+          <span class="font-bold">Ajouter au frigo</span>
         </NuxtLink>
-        <NuxtLink to="/shopping" class="card text-center py-4">
-          <span class="text-2xl">🛒</span>
-          <p class="text-sm font-medium text-gray-900 mt-2">Liste de courses</p>
+        <NuxtLink to="/shopping" class="btn bg-white border border-gray-100 shadow-sm hover:border-primary-200 text-dark-900 flex-col py-6 h-auto gap-3 group">
+          <span class="text-3xl group-hover:scale-110 transition-transform">🛒</span>
+          <span class="font-bold">Liste de courses</span>
         </NuxtLink>
       </div>
     </section>
