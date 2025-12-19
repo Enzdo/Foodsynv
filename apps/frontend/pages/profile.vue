@@ -31,6 +31,16 @@
 
     <!-- Menu Items -->
     <div class="space-y-2">
+      <NuxtLink to="/nutrition" class="card w-full flex items-center gap-4 py-3">
+        <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+          <span class="text-xl">🥗</span>
+        </div>
+        <span class="flex-1 text-left font-medium text-gray-900">Coach Nutrition</span>
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </NuxtLink>
+
       <button class="card w-full flex items-center gap-4 py-3">
         <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
           <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

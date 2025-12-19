@@ -141,6 +141,19 @@
       </div>
     </section>
 
+    <!-- Nutrition Coach Banner -->
+    <section v-if="familyStore.hasFamily" class="mb-8">
+      <NuxtLink to="/nutrition" class="card !p-0 overflow-hidden bg-gradient-to-r from-green-500 to-emerald-600 text-white group">
+        <div class="flex items-center p-4">
+          <div class="flex-1">
+            <h3 class="font-bold text-lg mb-1">🥗 Coach Nutrition</h3>
+            <p class="text-green-100 text-sm">Repas personnalisés selon vos objectifs</p>
+          </div>
+          <div class="text-4xl group-hover:scale-110 transition-transform">→</div>
+        </div>
+      </NuxtLink>
+    </section>
+
     <!-- Quick Actions -->
     <section v-if="familyStore.hasFamily">
       <h2 class="text-lg font-bold text-dark-900 mb-4 flex items-center gap-2">

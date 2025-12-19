@@ -35,6 +35,24 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare isActive: boolean
 
+  @column()
+  declare weight: number | null
+
+  @column()
+  declare height: number | null
+
+  @column()
+  declare gender: 'male' | 'female' | 'other' | null
+
+  @column()
+  declare age: number | null
+
+  @column()
+  declare activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active' | null
+
+  @column()
+  declare goal: 'lose_weight' | 'maintain' | 'gain_muscle' | null
+
   @column.dateTime()
   declare emailVerifiedAt: DateTime | null
 
@@ -75,6 +93,12 @@ export default class User extends compose(BaseModel, AuthFinder) {
       avatarUrl: this.avatarUrl,
       role: this.role,
       isActive: this.isActive,
+      weight: this.weight,
+      height: this.height,
+      gender: this.gender,
+      age: this.age,
+      activityLevel: this.activityLevel,
+      goal: this.goal,
       emailVerifiedAt: this.emailVerifiedAt?.toISO(),
       createdAt: this.createdAt.toISO(),
       updatedAt: this.updatedAt.toISO(),

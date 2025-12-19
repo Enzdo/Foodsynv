@@ -85,6 +85,11 @@ router.group(() => {
 
     // Receipt scanning
     router.post('/receipts/scan', '#controllers/receipt_controller.scan')
+
+    // Nutrition routes
+    router.get('/nutrition/profile', '#controllers/nutrition_controller.getProfile')
+    router.put('/nutrition/profile', '#controllers/nutrition_controller.updateProfile')
+    router.post('/nutrition/analyze', '#controllers/nutrition_controller.analyze')
   }).use(middleware.auth())
   
 }).prefix('/api/v1')
